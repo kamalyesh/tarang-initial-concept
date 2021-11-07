@@ -1,7 +1,9 @@
 {
   "name": "tarang",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "author": "Kamalyesh Kannadkar",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -12,6 +14,10 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2",
     "webpack": "^4.44.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamalyesh/tarang.git"
   },
   "scripts": {
     "start": "react-scripts start",
