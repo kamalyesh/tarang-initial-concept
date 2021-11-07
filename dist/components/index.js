@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _Line = _interopRequireDefault(require("./Line"));
+var _Line = _interopRequireDefault(require("./v1/Line"));
 
-var _Bar = _interopRequireDefault(require("./Bar"));
+var _Bar = _interopRequireDefault(require("./v1/Bar"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

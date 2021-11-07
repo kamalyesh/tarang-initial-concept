@@ -1,3 +1,3 @@
-import Tarang from "./components/v1/index"
+import Tarang from "./lib/components/index"
 
 export default Tarang;

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import getNextId from "../../utils/getNextId";
-import binrayFloor from "../../utils/binrayFloor";
+import getNextId from "../../../utils/getNextId";
+import binrayFloor from "../../../utils/binrayFloor";
 import * as d3 from 'd3'
 
-export default function Line({ audioUrl, coverArtUrl, width, height, controls = false }) {
+export default function Bar({ audioUrl, coverArtUrl, width, height, controls = false }) {
     // TODO: add state loaded. to check that the user has interacted with the page. so that the autoplay functionality can also be added in future
-    const initialDimensions = { WIDTH: 256, HEIGHT: 280, PLAYER_HEIGHT: 80 }
+    const initialDimensions = { WIDTH: 256, HEIGHT: 280, PLAYER_HEIGHT: 0 }
     const [isPlaying, setIsPlaying] = useState(false)
     const [canvasId, setCanvasId] = useState(getNextId())
     const [dimensions, setDimensions] = useState(initialDimensions)
@@ -24,36 +24,37 @@ export default function Line({ audioUrl, coverArtUrl, width, height, controls = 
         }
     }, [width, height])
 
+    let barPadding = 1
+
     const clearSvg = () => {
         if (svgRef.current) svgRef.current.selectAll("*").remove()
-        console.log("clearing svg")
     }
 
     const updateSvg = (frequencies, height = dimensions.HEIGHT - dimensions.PLAYER_HEIGHT, width = dimensions.WIDTH) => {
         analyserRef.current.getByteFrequencyData(frequencies);
         if (svgRef.current && frequencies.length) {
-            clearSvg()
-            var line1Func = d3.line()
-                .x(function (d, i) {
+            svgRef.current.selectAll('rect')
+                .data(frequencies)
+                .enter()
+                .append('rect')
+                .attr('fill', function (d) {
+                    return "#f00"
+                })
+                .attr('width', width / frequencies.length - barPadding)
+                .attr('x', function (d, i) {
                     return i * (width / frequencies.length);
                 })
-                .y(function (d) {
-                    return (height * 0.9) - (d * 0.4);
-                })
-            var line2Func = d3.line()
-                .x(function (d, i) {
-                    return i * (width / frequencies.length);
-                })
-                .y(function (d) {
+            svgRef.current.selectAll('rect')
+                .data(frequencies)
+                .attr('y', function (d, i) {
+                    // console.log({ yd: d })
+                    // return (height * 0.9) - (d * 0.4);
                     return (height * 0.9) - (d * 0.8);
                 })
-            svgRef.current.append('path')
-                // .attr('d', line1Func(frequencies))
-                .attr('d', line2Func(frequencies))
-                .attr('stroke', 'black')
-                .attr('fill', 'none')
-
-
+                .attr('height', function (d, i) {
+                    // console.log({ hd: d })
+                    return (d) * 0.9;
+                });
         }
     }
     const createSvg = (frequencies, height = ((dimensions.HEIGHT - dimensions.PLAYER_HEIGHT) * 0.9), width = dimensions.WIDTH) => {
@@ -67,7 +68,7 @@ export default function Line({ audioUrl, coverArtUrl, width, height, controls = 
                     .attr('width', width)
                     .attr('class', 'my-1')
                     .attr('style', coverArtUrl ? `background: url(${coverArtUrl});` : 'background: liniear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 118, 124, 0.73))')
-                    .attr('id', "line_" + canvasId + "_" + getNextId());
+                    .attr('id', "bar_" + canvasId + "_" + getNextId());
             }
 
             const updateFrequencyData = () => {

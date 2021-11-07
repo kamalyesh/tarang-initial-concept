@@ -9,9 +9,9 @@ exports.default = Bar;
 
 var _react = require("react");
 
-var _getNextId = _interopRequireDefault(require("../../utils/getNextId"));
+var _getNextId = _interopRequireDefault(require("../../../utils/getNextId"));
 
-var _binrayFloor = _interopRequireDefault(require("../../utils/binrayFloor"));
+var _binrayFloor = _interopRequireDefault(require("../../../utils/binrayFloor"));
 
 var d3 = _interopRequireWildcard(require("d3"));
 
